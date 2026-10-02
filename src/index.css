@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@layer base {
+  html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+  
+  body {
+    overscroll-behavior-y: none;
+    background-color: #f8f9ff;
+    color: #0b1c30;
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+}
+
+/* Material symbols outlined alignment helper */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.material-symbols-outlined.fill {
+  font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Hide scrollbar for clean horizontal chips */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Claymorphic Tactile Design System Classes */
+.clay-card {
+  background: #ffffff;
+  border-radius: 26px;
+  box-shadow: 10px 14px 24px -4px rgba(148, 163, 184, 0.35), 
+              inset 3px 3px 6px rgba(255, 255, 255, 0.95), 
+              inset -4px -4px 8px rgba(100, 116, 139, 0.08);
+}
+
+.clay-card-hero {
+  border-radius: 28px;
+  box-shadow: 12px 16px 28px -6px rgba(186, 26, 26, 0.22), 
+              inset 3px 3px 8px rgba(255, 255, 255, 0.95), 
+              inset -4px -4px 8px rgba(186, 26, 26, 0.12);
+}
+
+.clay-header {
+  box-shadow: 0 10px 24px -6px rgba(148, 163, 184, 0.18), 
+              inset 0 -2px 4px rgba(255, 255, 255, 0.7);
+}
+
+.clay-float-dock {
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 10px 14px 24px -4px rgba(148, 163, 184, 0.35), 
+              inset 3px 3px 6px rgba(255, 255, 255, 0.95), 
+              inset -4px -4px 8px rgba(100, 116, 139, 0.08);
+}
+
+.clay-action-btn {
+  box-shadow: 0 8px 18px -3px rgba(0, 107, 44, 0.38), 
+              inset 0 3px 4px rgba(255, 255, 255, 0.45), 
+              inset 0 -3px 4px rgba(0, 0, 0, 0.15);
+}
+
+.clay-action-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 3px 8px -2px rgba(0, 107, 44, 0.35),
+              inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.clay-action-btn-secondary {
+  box-shadow: 0 8px 18px -3px rgba(157, 67, 0, 0.38), 
+              inset 0 3px 4px rgba(255, 255, 255, 0.45), 
+              inset 0 -3px 4px rgba(0, 0, 0, 0.15);
+}
+
+.clay-inset-well {
+  box-shadow: inset 2px 2px 5px rgba(100, 116, 139, 0.15), 
+              inset -2px -2px 4px rgba(255, 255, 255, 0.85);
+}
+
+.clay-inset-soft {
+  box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.9), 
+              inset -1px -1px 3px rgba(100, 116, 139, 0.12);
+}
+
+.clay-badge-pill {
+  box-shadow: 6px 8px 16px -3px rgba(148, 163, 184, 0.25), 
+              inset 2px 2px 4px rgba(255, 255, 255, 1), 
+              inset -2px -2px 4px rgba(100, 116, 139, 0.06);
+}
+
+.clay-badge-active {
+  box-shadow: 0 6px 12px rgba(0, 107, 44, 0.3), 
+              inset 0 2px 3px rgba(255, 255, 255, 0.4);
+}
+
+.clay-badge-active-orange {
+  box-shadow: 0 6px 12px rgba(253, 118, 26, 0.3), 
+              inset 0 2px 3px rgba(255, 255, 255, 0.4);
+}
+
+.clay-icon-well {
+  box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.9), 
+              inset -1px -1px 3px rgba(100, 116, 139, 0.12);
+}

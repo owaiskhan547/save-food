@@ -1,0 +1,85 @@
+{
+  "entities": {
+    "user": {
+      "title": "User",
+      "description": "User profile for food donor, shelter coordinator, or volunteer courier",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["ngo", "provider", "volunteer"] },
+        "organization": { "type": "string" },
+        "trustScore": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["email", "role"]
+    },
+    "foodBatch": {
+      "title": "FoodBatch",
+      "description": "Perishable surplus food batch available for rescue",
+      "type": "object",
+      "properties": {
+        "donorName": { "type": "string" },
+        "donorType": { "type": "string" },
+        "locationArea": { "type": "string" },
+        "distanceKm": { "type": "number" },
+        "distanceLabel": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "quantityLabel": { "type": "string" },
+        "urgencyScore": { "type": "number" },
+        "isCritical": { "type": "boolean" },
+        "expirySecondsRemaining": { "type": "number" },
+        "category": { "type": "string", "enum": ["cooked", "bakery", "produce", "dairy"] },
+        "tags": { "type": "array" },
+        "status": { "type": "string", "enum": ["available", "locked", "claimed", "in_transit", "delivered"] },
+        "claimedBy": { "type": "string" },
+        "claimedByUid": { "type": "string" },
+        "transitStatus": { "type": "string" },
+        "verified": { "type": "boolean" },
+        "iconName": { "type": "string" },
+        "iconBgColor": { "type": "string" },
+        "iconTextColor": { "type": "string" },
+        "pickupWindow": { "type": "string" },
+        "donorPhone": { "type": "string" },
+        "donorAddress": { "type": "string" },
+        "temperatureHolding": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["donorName", "title", "category", "status"]
+    },
+    "reservation": {
+      "title": "Reservation",
+      "description": "Locked reservation handshake between donor and shelter",
+      "type": "object",
+      "properties": {
+        "batchId": { "type": "string" },
+        "shelterName": { "type": "string" },
+        "userUid": { "type": "string" },
+        "userName": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "needCourier": { "type": "boolean" },
+        "beneficiaryCount": { "type": "number" },
+        "otpCode": { "type": "string" },
+        "status": { "type": "string", "enum": ["locked", "in_transit", "delivered"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["batchId", "shelterName", "otpCode", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "user",
+      "description": "User profiles indexed by Firebase Auth UID"
+    },
+    "/batches/{batchId}": {
+      "schema": "foodBatch",
+      "description": "Real-time surplus food batches across Mumbai rescue grid"
+    },
+    "/reservations/{reservationId}": {
+      "schema": "reservation",
+      "description": "Locked reservations and verification handshakes"
+    }
+  }
+}

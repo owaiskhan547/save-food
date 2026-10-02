@@ -1,0 +1,7 @@
+{
+  "name": "RescueFeed - Live Surplus Food Rescue Network",
+  "description": "Tactile Claymorphic food rescue and redistribution network connecting banquet halls, restaurants, bakeries, and organic farms with local NGOs, shelters, and volunteer transit couriers in real time.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

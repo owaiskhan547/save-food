@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User profiles: readable by authenticated users; writable by owner
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId);
+    }
+
+    // Food surplus batches: readable by anyone (public grid visibility)
+    // Create/update by authenticated users or public demo participants
+    match /batches/{batchId} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if true;
+      allow delete: if isAuthenticated();
+    }
+
+    // Reservations: readable by anyone on the grid; create/update allowed
+    match /reservations/{reservationId} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if true;
+    }
+
+    // Connectivity test probe
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+  }
+}
