@@ -1,12 +1,6 @@
 import React from 'react';
 
-interface MetricStripProps {
-  mealsRescued: number;
-  batchesNear: number;
-  avgPickupTime: string;
-}
-
-export const MetricStrip: React.FC<MetricStripProps> = ({
+export const MetricStrip = ({
   mealsRescued,
   batchesNear,
   avgPickupTime

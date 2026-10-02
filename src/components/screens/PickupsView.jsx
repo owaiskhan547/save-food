@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
-import { TransitLogistics } from '../../types';
 
-interface PickupsViewProps {
-  transit: TransitLogistics;
-  onAdvanceStep: (newStep: number) => void;
-  onOpenRouteMap: () => void;
-}
-
-export const PickupsView: React.FC<PickupsViewProps> = ({
+export const PickupsView = ({
   transit,
   onAdvanceStep,
   onOpenRouteMap
 }) => {
   const [tempVerified, setTempVerified] = useState(false);
-  const [deliveryFinished, setDeliveryFinished] = useState(transit.currentStep >= 5);
+  const [deliveryFinished, setDeliveryFinished] = useState((transit?.currentStep || 1) >= 5);
 
   const handleFinishDelivery = () => {
     confetti({
@@ -25,6 +18,8 @@ export const PickupsView: React.FC<PickupsViewProps> = ({
     onAdvanceStep(5);
     setDeliveryFinished(true);
   };
+
+  if (!transit) return null;
 
   return (
     <div className="flex flex-col gap-4 pb-24">
@@ -67,7 +62,7 @@ export const PickupsView: React.FC<PickupsViewProps> = ({
           </div>
           <button
             onClick={onOpenRouteMap}
-            className="px-3 py-1.5 rounded-full bg-white text-[#006b2c] text-xs font-bold shadow-sm flex items-center gap-1 active:scale-95"
+            className="px-3 py-1.5 rounded-full bg-white text-[#006b2c] text-xs font-bold shadow-sm flex items-center gap-1 active:scale-95 cursor-pointer"
           >
             <span className="material-symbols-outlined text-sm">map</span>
             <span>View Map</span>
@@ -159,7 +154,7 @@ export const PickupsView: React.FC<PickupsViewProps> = ({
           {!tempVerified && (
             <button
               onClick={() => setTempVerified(true)}
-              className="w-full h-11 rounded-full bg-[#eff4ff] hover:bg-[#dce9ff] text-[#006b2c] text-xs font-bold flex items-center justify-center gap-1.5 transition-all"
+              className="w-full h-11 rounded-full bg-[#eff4ff] hover:bg-[#dce9ff] text-[#006b2c] text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
             >
               <span className="material-symbols-outlined text-sm">task_alt</span>
               <span>Record Digital Temperature Inspection (71.4°C)</span>

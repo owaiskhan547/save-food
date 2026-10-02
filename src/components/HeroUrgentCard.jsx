@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { FoodBatch } from '../types';
 
-interface HeroUrgentCardProps {
-  batch: FoodBatch;
-  onClaim: (batch: FoodBatch) => void;
-}
-
-export const HeroUrgentCard: React.FC<HeroUrgentCardProps> = ({ batch, onClaim }) => {
-  const [secondsLeft, setSecondsLeft] = useState(batch.expirySecondsRemaining);
+export const HeroUrgentCard = ({ batch, onClaim }) => {
+  const [secondsLeft, setSecondsLeft] = useState(batch?.expirySecondsRemaining || 6134);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -16,14 +10,16 @@ export const HeroUrgentCard: React.FC<HeroUrgentCardProps> = ({ batch, onClaim }
     return () => clearInterval(interval);
   }, []);
 
-  const formatCountdown = (totalSec: number) => {
+  const formatCountdown = (totalSec) => {
     const h = Math.floor(totalSec / 3600);
     const m = Math.floor((totalSec % 3600) / 60);
     const s = totalSec % 60;
     return `${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
   };
 
-  const isClaimed = batch.status === 'claimed' || batch.status === 'locked';
+  const isClaimed = batch?.status === 'claimed' || batch?.status === 'locked';
+
+  if (!batch) return null;
 
   return (
     <div className="relative w-full rounded-[28px] bg-gradient-to-br from-[#ffdad6] via-[#eff4ff] to-[#ffffff] p-4 shadow-[12px_16px_28px_-6px_rgba(186,26,26,0.22),inset_3px_3px_8px_rgba(255,255,255,0.95),inset_-4px_-4px_8px_rgba(186,26,26,0.12)] flex flex-col gap-3 overflow-hidden border border-[#ffdad6]/60">

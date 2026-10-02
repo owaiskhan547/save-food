@@ -5,23 +5,22 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  SafeAreaView,
-  StatusBar,
   Modal,
-  TextInput,
   Image,
   Dimensions,
   Platform,
   Alert
 } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
-import { MaterialIcons, Ionicons, Feather } from '@expo/vector-icons';
-import { FoodBatch, TransitLogistics, CategoryType } from './src/types';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 
 const { width } = Dimensions.get('window');
 
 // Initial Mock Data
-const INITIAL_BATCHES: FoodBatch[] = [
+const INITIAL_BATCHES = [
   {
     id: 'batch-hero-1',
     donorName: 'Grand Banquet Palace',
@@ -123,7 +122,7 @@ const INITIAL_BATCHES: FoodBatch[] = [
   }
 ];
 
-const INITIAL_TRANSIT: TransitLogistics = {
+const INITIAL_TRANSIT = {
   id: 'transit-1',
   code: '#FR-892',
   donorName: 'Grand Banquet Palace',
@@ -146,18 +145,18 @@ const INITIAL_TRANSIT: TransitLogistics = {
 };
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'list' | 'pickups' | 'impact'>('dashboard');
-  const [role, setRole] = useState<'ngo' | 'provider'>('ngo');
-  const [batches, setBatches] = useState<FoodBatch[]>(INITIAL_BATCHES);
-  const [transit, setTransit] = useState<TransitLogistics>(INITIAL_TRANSIT);
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [role, setRole] = useState('ngo');
+  const [batches, setBatches] = useState(INITIAL_BATCHES);
+  const [transit, setTransit] = useState(INITIAL_TRANSIT);
   const [mealsRescued, setMealsRescued] = useState(428);
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType>('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   // Hero Countdown Timer
   const [heroSeconds, setHeroSeconds] = useState(1 * 3600 + 42 * 60 + 14);
 
   // Modals
-  const [selectedBatchForClaim, setSelectedBatchForClaim] = useState<FoodBatch | null>(null);
+  const [selectedBatchForClaim, setSelectedBatchForClaim] = useState(null);
   const [showRouteModal, setShowRouteModal] = useState(false);
   const [showNotificationModal, setShowNotificationModal] = useState(false);
 
@@ -168,15 +167,26 @@ export default function App() {
     return () => clearInterval(timer);
   }, []);
 
-  const formatTimer = (totalSec: number) => {
+  const triggerHaptic = () => {
+    try {
+      if (Platform.OS !== 'web') {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      }
+    } catch {
+      // Haptics optional
+    }
+  };
+
+  const formatTimer = (totalSec) => {
     const h = Math.floor(totalSec / 3600);
     const m = Math.floor((totalSec % 3600) / 60);
     const s = totalSec % 60;
     return `${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
   };
 
-  const handleClaimConfirm = (shelterName: string) => {
+  const handleClaimConfirm = (shelterName) => {
     if (!selectedBatchForClaim) return;
+    triggerHaptic();
     setBatches((prev) =>
       prev.map((b) =>
         b.id === selectedBatchForClaim.id
@@ -193,8 +203,9 @@ export default function App() {
   const feedBatches = batches.filter((b) => !b.isCritical);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor="#f8f9ff" />
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.safeArea}>
+        <StatusBar style="dark" backgroundColor="#f8f9ff" />
 
       {/* Top Header */}
       <View style={styles.header}>
@@ -438,7 +449,7 @@ export default function App() {
                   return (
                     <TouchableOpacity
                       key={chip.id}
-                      onPress={() => setSelectedCategory(chip.id as any)}
+                      onPress={() => setSelectedCategory(chip.id)}
                       style={[styles.chipPill, isSelected && styles.chipPillActive]}
                     >
                       <Text style={[styles.chipText, isSelected && styles.chipTextActive]}>
@@ -459,7 +470,7 @@ export default function App() {
                     <View style={styles.feedHeaderLeft}>
                       <View style={[styles.feedIconBg, { backgroundColor: batch.iconBgColor }]}>
                         <MaterialIcons
-                          name={batch.iconName as any}
+                          name={batch.iconName}
                           size={22}
                           color={batch.iconTextColor}
                         />
@@ -765,7 +776,8 @@ export default function App() {
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

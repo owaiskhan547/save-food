@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FoodBatch, TransitLogistics, CategoryType } from '../../types';
 import { RoleSwitcher } from '../RoleSwitcher';
 import { MetricStrip } from '../MetricStrip';
 import { HeroUrgentCard } from '../HeroUrgentCard';
@@ -8,25 +7,10 @@ import { FilterChips } from '../FilterChips';
 import { FoodCard } from '../FoodCard';
 import { RegulatoryFooter } from '../RegulatoryFooter';
 
-interface DashboardViewProps {
-  role: 'ngo' | 'provider';
-  onRoleChange: (role: 'ngo' | 'provider') => void;
-  batches: FoodBatch[];
-  transit: TransitLogistics;
-  mealsRescued: number;
-  batchesNear: number;
-  avgPickupTime: string;
-  onClaimBatch: (batch: FoodBatch) => void;
-  onShareBatch: (batch: FoodBatch) => void;
-  onOpenRouteMap: () => void;
-  onOpenSafetyProtocol: () => void;
-  onNavigateToListFood: () => void;
-}
-
-export const DashboardView: React.FC<DashboardViewProps> = ({
+export const DashboardView = ({
   role,
   onRoleChange,
-  batches,
+  batches = [],
   transit,
   mealsRescued,
   batchesNear,
@@ -37,7 +21,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   onOpenSafetyProtocol,
   onNavigateToListFood
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType>('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   // Filter batches
   const heroBatch = batches.find((b) => b.isCritical) || batches[0];
@@ -79,7 +63,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
           <button
             onClick={onNavigateToListFood}
-            className="px-3.5 py-2 rounded-full bg-white text-[#9d4300] text-xs font-extrabold shadow active:scale-95 whitespace-nowrap"
+            className="px-3.5 py-2 rounded-full bg-white text-[#9d4300] text-xs font-extrabold shadow active:scale-95 whitespace-nowrap cursor-pointer"
           >
             + List Food
           </button>
@@ -131,7 +115,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <p className="text-xs font-bold">No batches found in this category right now.</p>
             <button
               onClick={() => setSelectedCategory('all')}
-              className="mt-2 text-xs text-[#006b2c] font-bold underline"
+              className="mt-2 text-xs text-[#006b2c] font-bold underline cursor-pointer"
             >
               View all available batches
             </button>

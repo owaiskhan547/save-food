@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface RegulatoryFooterProps {
-  onOpenSafetyProtocol: () => void;
-}
-
-export const RegulatoryFooter: React.FC<RegulatoryFooterProps> = ({ onOpenSafetyProtocol }) => {
+export const RegulatoryFooter = ({ onOpenSafetyProtocol }) => {
   return (
     <button
       onClick={onOpenSafetyProtocol}

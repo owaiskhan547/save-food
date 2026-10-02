@@ -1,37 +1,16 @@
 import React, { useState } from 'react';
 
-interface GroundingChunk {
-  maps?: {
-    uri?: string;
-    title?: string;
-    placeAnswerSources?: {
-      reviewSnippets?: {
-        reviewText?: string;
-      }[];
-    };
-  };
-  web?: {
-    uri?: string;
-    title?: string;
-  };
-}
-
-interface MapsGroundingModalProps {
-  onClose: () => void;
-  initialQuery?: string;
-}
-
-export const MapsGroundingModal: React.FC<MapsGroundingModalProps> = ({
+export const MapsGroundingModal = ({
   onClose,
   initialQuery = 'Find community kitchens, shelter homes, and food donors near Mumbai Central'
 }) => {
   const [query, setQuery] = useState(initialQuery);
   const [loading, setLoading] = useState(false);
-  const [resultText, setResultText] = useState<string | null>(null);
-  const [groundingChunks, setGroundingChunks] = useState<GroundingChunk[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [resultText, setResultText] = useState(null);
+  const [groundingChunks, setGroundingChunks] = useState([]);
+  const [error, setError] = useState(null);
 
-  const fetchMapsGrounding = async (searchQuery: string) => {
+  const fetchMapsGrounding = async (searchQuery) => {
     setLoading(true);
     setError(null);
     try {
@@ -53,7 +32,7 @@ export const MapsGroundingModal: React.FC<MapsGroundingModalProps> = ({
       const data = await res.json();
       setResultText(data.text);
       setGroundingChunks(data.groundingChunks || []);
-    } catch (err: any) {
+    } catch (err) {
       console.error('[Maps Grounding Modal Error]:', err);
       setError(err.message || 'Failed to fetch Google Maps data');
     } finally {
@@ -91,7 +70,7 @@ export const MapsGroundingModal: React.FC<MapsGroundingModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center text-sm font-bold"
+            className="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center text-sm font-bold cursor-pointer"
           >
             ✕
           </button>
@@ -116,7 +95,7 @@ export const MapsGroundingModal: React.FC<MapsGroundingModalProps> = ({
             <button
               onClick={() => fetchMapsGrounding(query)}
               disabled={loading || !query.trim()}
-              className="px-4 h-11 rounded-2xl bg-[#006b2c] hover:bg-[#00873a] text-white text-xs font-bold shadow flex items-center gap-1.5 active:scale-95 disabled:opacity-50"
+              className="px-4 h-11 rounded-2xl bg-[#006b2c] hover:bg-[#00873a] text-white text-xs font-bold shadow flex items-center gap-1.5 active:scale-95 disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <span className="animate-spin material-symbols-outlined text-[18px]">sync</span>
@@ -136,7 +115,7 @@ export const MapsGroundingModal: React.FC<MapsGroundingModalProps> = ({
                   setQuery(sq);
                   fetchMapsGrounding(sq);
                 }}
-                className="shrink-0 px-2.5 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 text-[10px] font-bold"
+                className="shrink-0 px-2.5 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 text-[10px] font-bold cursor-pointer"
               >
                 {sq}
               </button>
@@ -244,7 +223,7 @@ export const MapsGroundingModal: React.FC<MapsGroundingModalProps> = ({
             </p>
             <button
               onClick={() => fetchMapsGrounding(query)}
-              className="mt-2 px-4 py-2 rounded-full bg-[#006b2c] text-white text-xs font-bold shadow active:scale-95"
+              className="mt-2 px-4 py-2 rounded-full bg-[#006b2c] text-white text-xs font-bold shadow active:scale-95 cursor-pointer"
             >
               Search Mumbai Central Grid
             </button>
@@ -256,7 +235,7 @@ export const MapsGroundingModal: React.FC<MapsGroundingModalProps> = ({
           <span>Google Maps Platform Grounding Enabled</span>
           <button
             onClick={onClose}
-            className="px-4 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold"
+            className="px-4 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold cursor-pointer"
           >
             Close
           </button>

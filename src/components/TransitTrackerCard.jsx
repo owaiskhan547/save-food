@@ -1,12 +1,6 @@
 import React from 'react';
-import { TransitLogistics } from '../types';
 
-interface TransitTrackerCardProps {
-  transit: TransitLogistics;
-  onOpenRouteMap: () => void;
-}
-
-export const TransitTrackerCard: React.FC<TransitTrackerCardProps> = ({
+export const TransitTrackerCard = ({
   transit,
   onOpenRouteMap
 }) => {
@@ -93,7 +87,7 @@ export const TransitTrackerCard: React.FC<TransitTrackerCardProps> = ({
         <span>Step 3 of 5: Reservation locked, handoff in progress</span>
         <button
           onClick={onOpenRouteMap}
-          className="text-[#006b2c] hover:text-[#00873a] font-bold flex items-center gap-0.5 hover:underline"
+          className="text-[#006b2c] hover:text-[#00873a] font-bold flex items-center gap-0.5 hover:underline cursor-pointer"
         >
           <span>Route Map</span>
           <span className="text-xs">→</span>

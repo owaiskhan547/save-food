@@ -1,14 +1,6 @@
 import React, { useState } from 'react';
-import { TransitLogistics } from '../../types';
 
-interface RouteMapModalProps {
-  transit: TransitLogistics;
-  onClose: () => void;
-  onAdvanceStep: (newStep: number) => void;
-  onOpenMapsGrounding?: () => void;
-}
-
-export const RouteMapModal: React.FC<RouteMapModalProps> = ({
+export const RouteMapModal = ({
   transit,
   onClose,
   onAdvanceStep,
@@ -20,6 +12,8 @@ export const RouteMapModal: React.FC<RouteMapModalProps> = ({
     setCallAlert(true);
     setTimeout(() => setCallAlert(false), 3000);
   };
+
+  if (!transit) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/45 backdrop-blur-sm animate-in fade-in duration-150">
@@ -42,7 +36,7 @@ export const RouteMapModal: React.FC<RouteMapModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center"
+            className="w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center cursor-pointer"
           >
             ✕
           </button>
@@ -133,7 +127,7 @@ export const RouteMapModal: React.FC<RouteMapModalProps> = ({
           </div>
           <button
             onClick={handleSimulateCall}
-            className="px-3 py-1.5 rounded-full bg-[#006b2c] text-white text-xs font-bold flex items-center gap-1 active:scale-95 shadow-sm"
+            className="px-3 py-1.5 rounded-full bg-[#006b2c] text-white text-xs font-bold flex items-center gap-1 active:scale-95 shadow-sm cursor-pointer"
           >
             <span className="material-symbols-outlined text-sm">call</span>
             <span>Contact</span>

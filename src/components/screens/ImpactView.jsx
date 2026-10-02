@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 
-interface ImpactViewProps {
-  mealsRescued: number;
-}
-
-export const ImpactView: React.FC<ImpactViewProps> = ({ mealsRescued }) => {
+export const ImpactView = ({ mealsRescued }) => {
   const [downloaded, setDownloaded] = useState(false);
 
-  // Calculations based on scientific food waste models: ~2.5 kg CO2e per meal, ~200L water per meal
+  // Scientific models: ~2.5 kg CO2e per meal, ~200L water per meal
   const co2eSavedKg = Math.round(mealsRescued * 2.5);
   const waterSavedLiters = Math.round(mealsRescued * 200);
 
@@ -127,7 +123,7 @@ export const ImpactView: React.FC<ImpactViewProps> = ({ mealsRescued }) => {
 
         <button
           onClick={handleDownloadCert}
-          className="w-full h-11 rounded-full bg-[#006b2c] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm active:scale-98"
+          className="w-full h-11 rounded-full bg-[#006b2c] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm active:scale-98 cursor-pointer"
         >
           <span className="material-symbols-outlined text-sm">download</span>
           <span>{downloaded ? 'Certificate Downloaded!' : 'Export Impact Certificate (PDF)'}</span>

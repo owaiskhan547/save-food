@@ -1,14 +1,6 @@
 import React from 'react';
 
-export type ActiveTab = 'dashboard' | 'list-food' | 'pickups' | 'impact';
-
-interface BottomNavProps {
-  activeTab: ActiveTab;
-  onTabChange: (tab: ActiveTab) => void;
-  pendingPickupsCount?: number;
-}
-
-export const BottomNav: React.FC<BottomNavProps> = ({
+export const BottomNav = ({
   activeTab,
   onTabChange,
   pendingPickupsCount = 1

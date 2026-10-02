@@ -1,19 +1,7 @@
 import React, { useState } from 'react';
 import { LOCATIONS } from '../data/mockData';
-import { User } from '../firebase';
 
-interface HeaderProps {
-  currentLocation: string;
-  onSelectLocation: (loc: string) => void;
-  unreadCount: number;
-  onOpenNotifications: () => void;
-  onOpenProfile: () => void;
-  onOpenExpoCode: () => void;
-  onOpenMapsGrounding: () => void;
-  currentUser: User | null;
-}
-
-export const Header: React.FC<HeaderProps> = ({
+export const Header = ({
   currentLocation,
   onSelectLocation,
   unreadCount,

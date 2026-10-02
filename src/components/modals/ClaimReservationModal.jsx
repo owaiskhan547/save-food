@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
-import { FoodBatch } from '../../types';
 import { SHELTERS_LIST } from '../../data/mockData';
 
-interface ClaimReservationModalProps {
-  batch: FoodBatch | null;
-  onClose: () => void;
-  onConfirmClaim: (batchId: string, shelterName: string, needsCourier: boolean) => void;
-}
-
-export const ClaimReservationModal: React.FC<ClaimReservationModalProps> = ({
+export const ClaimReservationModal = ({
   batch,
   onClose,
   onConfirmClaim
@@ -53,7 +46,7 @@ export const ClaimReservationModal: React.FC<ClaimReservationModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center"
+            className="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center cursor-pointer"
           >
             ✕
           </button>
@@ -83,7 +76,7 @@ export const ClaimReservationModal: React.FC<ClaimReservationModalProps> = ({
                 key={shelter.id}
                 type="button"
                 onClick={() => setSelectedShelter(shelter.name)}
-                className={`p-3 rounded-2xl flex items-center justify-between text-left transition-all ${
+                className={`p-3 rounded-2xl flex items-center justify-between text-left transition-all cursor-pointer ${
                   selectedShelter === shelter.name
                     ? 'bg-[#006b2c]/10 border-2 border-[#006b2c] text-[#006b2c]'
                     : 'bg-gray-50 hover:bg-gray-100 border border-transparent text-gray-700'
@@ -147,14 +140,14 @@ export const ClaimReservationModal: React.FC<ClaimReservationModalProps> = ({
         <div className="flex items-center gap-2 pt-2">
           <button
             onClick={onClose}
-            className="flex-1 h-12 rounded-full border border-gray-300 font-bold text-xs text-gray-600 hover:bg-gray-50 active:scale-98"
+            className="flex-1 h-12 rounded-full border border-gray-300 font-bold text-xs text-gray-600 hover:bg-gray-50 active:scale-98 cursor-pointer"
           >
             Cancel
           </button>
           <button
             disabled={isSubmitting}
             onClick={handleClaim}
-            className="flex-[2] h-12 rounded-full bg-[#006b2c] hover:bg-[#00873a] text-white font-bold text-xs shadow-[0_8px_18px_-3px_rgba(0,107,44,0.38)] flex items-center justify-center gap-2 active:scale-98 transition-all disabled:opacity-50"
+            className="flex-[2] h-12 rounded-full bg-[#006b2c] hover:bg-[#00873a] text-white font-bold text-xs shadow-[0_8px_18px_-3px_rgba(0,107,44,0.38)] flex items-center justify-center gap-2 active:scale-98 transition-all disabled:opacity-50 cursor-pointer"
           >
             {isSubmitting ? (
               <span>Securing Batch...</span>

@@ -1,12 +1,6 @@
 import React from 'react';
 
-interface RoleSwitcherProps {
-  currentRole: 'ngo' | 'provider';
-  onRoleChange: (role: 'ngo' | 'provider') => void;
-  onOpenSafetyProtocol: () => void;
-}
-
-export const RoleSwitcher: React.FC<RoleSwitcherProps> = ({
+export const RoleSwitcher = ({
   currentRole,
   onRoleChange,
   onOpenSafetyProtocol
@@ -27,7 +21,7 @@ export const RoleSwitcher: React.FC<RoleSwitcherProps> = ({
 
         <button
           onClick={onOpenSafetyProtocol}
-          className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#eff4ff] shadow-[inset_1px_1px_3px_rgba(255,255,255,0.9),inset_-1px_-1px_3px_rgba(100,116,139,0.12)] hover:bg-[#dce9ff] transition-all"
+          className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#eff4ff] shadow-[inset_1px_1px_3px_rgba(255,255,255,0.9),inset_-1px_-1px_3px_rgba(100,116,139,0.12)] hover:bg-[#dce9ff] transition-all cursor-pointer"
         >
           <span className="material-symbols-outlined text-[#006b2c] text-[14px]">
             verified
@@ -42,7 +36,7 @@ export const RoleSwitcher: React.FC<RoleSwitcherProps> = ({
       <div className="w-full p-1.5 rounded-full bg-[#e5eeff] shadow-[inset_2px_2px_5px_rgba(100,116,139,0.15),inset_-2px_-2px_4px_rgba(255,255,255,0.85)] flex items-center justify-between gap-1">
         <button
           onClick={() => onRoleChange('ngo')}
-          className={`flex-1 py-2 px-3 rounded-full flex items-center justify-center gap-1.5 transition-all text-xs font-bold ${
+          className={`flex-1 py-2 px-3 rounded-full flex items-center justify-center gap-1.5 transition-all text-xs font-bold cursor-pointer ${
             currentRole === 'ngo'
               ? 'bg-[#ffffff] text-[#006b2c] shadow-[0_4px_12px_rgba(0,107,44,0.18),inset_2px_2px_4px_rgba(255,255,255,1),inset_-2px_-2px_4px_rgba(100,116,139,0.06)] scale-[1.01]'
               : 'text-[#3e4a3d] hover:text-[#0b1c30]'
@@ -56,7 +50,7 @@ export const RoleSwitcher: React.FC<RoleSwitcherProps> = ({
 
         <button
           onClick={() => onRoleChange('provider')}
-          className={`flex-1 py-2 px-3 rounded-full flex items-center justify-center gap-1.5 transition-all text-xs font-bold ${
+          className={`flex-1 py-2 px-3 rounded-full flex items-center justify-center gap-1.5 transition-all text-xs font-bold cursor-pointer ${
             currentRole === 'provider'
               ? 'bg-[#ffffff] text-[#fd761a] shadow-[0_4px_12px_rgba(253,118,26,0.22),inset_2px_2px_4px_rgba(255,255,255,1),inset_-2px_-2px_4px_rgba(100,116,139,0.06)] scale-[1.01]'
               : 'text-[#3e4a3d] hover:text-[#0b1c30]'

@@ -1,25 +1,12 @@
 import React from 'react';
-import { CategoryType } from '../types';
 
-interface FilterChipsProps {
-  selectedCategory: CategoryType;
-  onSelectCategory: (cat: CategoryType) => void;
-  counts: {
-    all: number;
-    urgent: number;
-    cooked: number;
-    bakery: number;
-    produce: number;
-  };
-}
-
-export const FilterChips: React.FC<FilterChipsProps> = ({
+export const FilterChips = ({
   selectedCategory,
   onSelectCategory,
   counts
 }) => {
-  const chips: { id: CategoryType; label: string; icon?: string }[] = [
-    { id: 'all', label: `All (${counts.all})` },
+  const chips = [
+    { id: 'all', label: `All (${counts?.all || 0})` },
     { id: 'urgent', label: `Urgent (<2h)`, icon: 'bolt' },
     { id: 'cooked', label: '🥘 Cooked Meals' },
     { id: 'bakery', label: '🥖 Bakery' },

@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { FoodBatch } from '../../types';
 
-interface ShareModalProps {
-  batch: FoodBatch | null;
-  onClose: () => void;
-}
-
-export const ShareModal: React.FC<ShareModalProps> = ({ batch, onClose }) => {
+export const ShareModal = ({ batch, onClose }) => {
   const [copied, setCopied] = useState(false);
   if (!batch) return null;
 
@@ -28,7 +22,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({ batch, onClose }) => {
             </div>
             <h3 className="text-sm font-extrabold text-[#0b1c30]">Dispatch Rescue Alert</h3>
           </div>
-          <button onClick={onClose} className="w-7 h-7 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center text-xs">
+          <button onClick={onClose} className="w-7 h-7 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center text-xs cursor-pointer">
             ✕
           </button>
         </div>
@@ -43,7 +37,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({ batch, onClose }) => {
         <div className="flex flex-col gap-2 pt-1">
           <button
             onClick={handleCopy}
-            className="w-full py-2.5 px-4 rounded-full bg-[#006b2c] text-white text-xs font-bold flex items-center justify-center gap-2 active:scale-98 shadow-sm"
+            className="w-full py-2.5 px-4 rounded-full bg-[#006b2c] text-white text-xs font-bold flex items-center justify-center gap-2 active:scale-98 shadow-sm cursor-pointer"
           >
             <span className="material-symbols-outlined text-[16px]">content_copy</span>
             <span>{copied ? 'Copied Alert Link!' : 'Copy Volunteer Alert'}</span>

@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { FoodBatch, TransitLogistics, NotificationItem } from './types';
 import { INITIAL_BATCHES, INITIAL_TRANSIT, INITIAL_NOTIFICATIONS } from './data/mockData';
-import { Header } from './components/Header';
-import { BottomNav, ActiveTab } from './components/BottomNav';
-import { DashboardView } from './components/screens/DashboardView';
-import { ListFoodView } from './components/screens/ListFoodView';
-import { PickupsView } from './components/screens/PickupsView';
-import { ImpactView } from './components/screens/ImpactView';
-import { ClaimReservationModal } from './components/modals/ClaimReservationModal';
-import { RouteMapModal } from './components/modals/RouteMapModal';
-import { NotificationsDrawer } from './components/modals/NotificationsDrawer';
-import { SafeProtocolModal } from './components/modals/SafeProtocolModal';
-import { ShareModal } from './components/modals/ShareModal';
-import { ProfileModal } from './components/modals/ProfileModal';
-import { ExpoCodeModal } from './components/modals/ExpoCodeModal';
-import { MapsGroundingModal } from './components/modals/MapsGroundingModal';
+import { Header } from './components/Header.jsx';
+import { BottomNav } from './components/BottomNav.jsx';
+import { DashboardView } from './components/screens/DashboardView.jsx';
+import { ListFoodView } from './components/screens/ListFoodView.jsx';
+import { PickupsView } from './components/screens/PickupsView.jsx';
+import { ImpactView } from './components/screens/ImpactView.jsx';
+import { ClaimReservationModal } from './components/modals/ClaimReservationModal.jsx';
+import { RouteMapModal } from './components/modals/RouteMapModal.jsx';
+import { NotificationsDrawer } from './components/modals/NotificationsDrawer.jsx';
+import { SafeProtocolModal } from './components/modals/SafeProtocolModal.jsx';
+import { ShareModal } from './components/modals/ShareModal.jsx';
+import { ProfileModal } from './components/modals/ProfileModal.jsx';
+import { ExpoCodeModal } from './components/modals/ExpoCodeModal.jsx';
+import { MapsGroundingModal } from './components/modals/MapsGroundingModal.jsx';
 import {
   auth,
   onAuthStateChanged,
-  User,
   db,
   validateFirestoreConnection,
   collection,
@@ -30,22 +28,22 @@ import {
 } from './firebase';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
-  const [role, setRole] = useState<'ngo' | 'provider'>('ngo');
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [role, setRole] = useState('ngo');
   const [currentLocation, setCurrentLocation] = useState('Mumbai Central • 2.4 km');
-  const [batches, setBatches] = useState<FoodBatch[]>(INITIAL_BATCHES);
-  const [transit, setTransit] = useState<TransitLogistics>(INITIAL_TRANSIT);
-  const [notifications, setNotifications] = useState<NotificationItem[]>(INITIAL_NOTIFICATIONS);
+  const [batches, setBatches] = useState(INITIAL_BATCHES);
+  const [transit, setTransit] = useState(INITIAL_TRANSIT);
+  const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
   const [mealsRescued, setMealsRescued] = useState(428);
   const [batchesNear, setBatchesNear] = useState(18);
   const [avgPickupTime] = useState('38m');
 
   // Firebase Authentication State
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   // Modals state
-  const [claimModalBatch, setClaimModalBatch] = useState<FoodBatch | null>(null);
-  const [shareModalBatch, setShareModalBatch] = useState<FoodBatch | null>(null);
+  const [claimModalBatch, setClaimModalBatch] = useState(null);
+  const [shareModalBatch, setShareModalBatch] = useState(null);
   const [showRouteMap, setShowRouteMap] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showSafeProtocol, setShowSafeProtocol] = useState(false);
@@ -101,9 +99,9 @@ export default function App() {
       batchesCol,
       (snapshot) => {
         if (!snapshot.empty) {
-          const remoteBatches: FoodBatch[] = [];
+          const remoteBatches = [];
           snapshot.forEach((docSnap) => {
-            remoteBatches.push(docSnap.data() as FoodBatch);
+            remoteBatches.push(docSnap.data());
           });
           // Keep critical item on top if available
           remoteBatches.sort((a, b) => (b.urgencyScore || 0) - (a.urgencyScore || 0));
@@ -123,7 +121,7 @@ export default function App() {
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   // Handle claiming batch with Firestore persistence
-  const handleConfirmClaim = async (batchId: string, shelterName: string, needsCourier: boolean) => {
+  const handleConfirmClaim = async (batchId, shelterName, needsCourier) => {
     // 1. Optimistic Local Update
     setBatches((prev) =>
       prev.map((b) => {
@@ -144,7 +142,7 @@ export default function App() {
 
     // 2. Add notification
     const claimedBatch = batches.find((b) => b.id === batchId);
-    const newNotif: NotificationItem = {
+    const newNotif = {
       id: `n-${Date.now()}`,
       title: 'Reservation Locked Successfully',
       message: `${shelterName} locked reservation for ${claimedBatch?.title || '40 meals'} at ${claimedBatch?.donorName || 'Donor'}. Code #RF-9842.`,
@@ -193,7 +191,7 @@ export default function App() {
   };
 
   // Handle step progression in transit
-  const handleAdvanceTransitStep = (newStep: number) => {
+  const handleAdvanceTransitStep = (newStep) => {
     setTransit((prev) => {
       const updatedSteps = prev.steps.map((st, idx) => ({
         ...st,
@@ -225,7 +223,7 @@ export default function App() {
   };
 
   // Handle adding new batch with Firestore persistence
-  const handleAddBatch = async (newBatch: FoodBatch) => {
+  const handleAddBatch = async (newBatch) => {
     // 1. Optimistic update
     setBatches((prev) => [newBatch, ...prev]);
     setBatchesNear((prev) => prev + 1);

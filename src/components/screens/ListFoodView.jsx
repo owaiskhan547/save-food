@@ -1,28 +1,22 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
-import { FoodBatch } from '../../types';
 
-interface ListFoodViewProps {
-  onAddBatch: (batch: FoodBatch) => void;
-  onDone: () => void;
-}
-
-export const ListFoodView: React.FC<ListFoodViewProps> = ({ onAddBatch, onDone }) => {
-  const [category, setCategory] = useState<'cooked' | 'bakery' | 'produce'>('cooked');
+export const ListFoodView = ({ onAddBatch, onDone }) => {
+  const [category, setCategory] = useState('cooked');
   const [donorName, setDonorName] = useState('Spice Symphony Catering');
   const [title, setTitle] = useState('50 Hot Paneer & Biryani Boxes');
   const [description, setDescription] = useState('Freshly prepared event surplus, vacuum-packed in food-grade thermal containers. Ready for immediate pickup.');
   const [quantity, setQuantity] = useState('50 Boxes (Serves ~50-60)');
   const [expiryHours, setExpiryHours] = useState(2);
   const [holdingTemp, setHoldingTemp] = useState('Hot Insulated (>65°C)');
-  const [selectedTags, setSelectedTags] = useState<string[]>(['FSSAI Certified', 'Pure Vegetarian']);
+  const [selectedTags, setSelectedTags] = useState(['FSSAI Certified', 'Pure Vegetarian']);
   const [donorAddress, setDonorAddress] = useState('Lower Parel Commercial Complex, Gate 2, Mumbai');
   const [fssaiAgreed, setFssaiAgreed] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const availableTags = ['Pure Vegetarian', 'Halal + Veg', 'FSSAI Certified', 'Jain Options', 'Freshly Baked', 'Organic Harvest'];
 
-  const toggleTag = (tag: string) => {
+  const toggleTag = (tag) => {
     if (selectedTags.includes(tag)) {
       setSelectedTags(selectedTags.filter((t) => t !== tag));
     } else {
@@ -30,7 +24,7 @@ export const ListFoodView: React.FC<ListFoodViewProps> = ({ onAddBatch, onDone }
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!fssaiAgreed) return;
 
@@ -41,7 +35,7 @@ export const ListFoodView: React.FC<ListFoodViewProps> = ({ onAddBatch, onDone }
       origin: { y: 0.6 }
     });
 
-    const newBatch: FoodBatch = {
+    const newBatch = {
       id: `batch-${Date.now()}`,
       donorName,
       donorType: category === 'cooked' ? 'Event Caterer' : category === 'bakery' ? 'Artisan Bakery' : 'Farm Cooperative',
@@ -102,7 +96,7 @@ export const ListFoodView: React.FC<ListFoodViewProps> = ({ onAddBatch, onDone }
               <button
                 key={cat.id}
                 type="button"
-                onClick={() => setCategory(cat.id as any)}
+                onClick={() => setCategory(cat.id)}
                 className={`p-2.5 rounded-2xl flex flex-col items-center gap-1 text-xs font-bold transition-all cursor-pointer ${
                   category === cat.id
                     ? 'bg-[#006b2c] text-white shadow-md scale-[1.02]'

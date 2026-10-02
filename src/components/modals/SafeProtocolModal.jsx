@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface SafeProtocolModalProps {
-  onClose: () => void;
-}
-
-export const SafeProtocolModal: React.FC<SafeProtocolModalProps> = ({ onClose }) => {
+export const SafeProtocolModal = ({ onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-150">
       <div className="w-full max-w-md bg-white rounded-[28px] p-5 shadow-2xl flex flex-col gap-4 max-h-[90vh] overflow-y-auto border border-gray-100">
@@ -20,7 +16,7 @@ export const SafeProtocolModal: React.FC<SafeProtocolModalProps> = ({ onClose })
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center"
+            className="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center cursor-pointer"
           >
             ✕
           </button>
@@ -60,7 +56,7 @@ export const SafeProtocolModal: React.FC<SafeProtocolModalProps> = ({ onClose })
 
         <button
           onClick={onClose}
-          className="w-full h-11 rounded-full bg-[#006b2c] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-98"
+          className="w-full h-11 rounded-full bg-[#006b2c] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-98 cursor-pointer"
         >
           <span>Understood &amp; Verified</span>
         </button>

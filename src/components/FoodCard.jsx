@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { FoodBatch } from '../types';
 
-interface FoodCardProps {
-  batch: FoodBatch;
-  onClaim: (batch: FoodBatch) => void;
-  onShare: (batch: FoodBatch) => void;
-}
-
-export const FoodCard: React.FC<FoodCardProps> = ({ batch, onClaim, onShare }) => {
-  const [secondsLeft, setSecondsLeft] = useState(batch.expirySecondsRemaining);
+export const FoodCard = ({ batch, onClaim, onShare }) => {
+  const [secondsLeft, setSecondsLeft] = useState(batch?.expirySecondsRemaining || 3600);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -17,14 +10,16 @@ export const FoodCard: React.FC<FoodCardProps> = ({ batch, onClaim, onShare }) =
     return () => clearInterval(timer);
   }, []);
 
-  const formatTimer = (totalSec: number) => {
+  const formatTimer = (totalSec) => {
     const h = Math.floor(totalSec / 3600);
     const m = Math.floor((totalSec % 3600) / 60);
     const s = totalSec % 60;
     return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   };
 
-  const isLocked = batch.status === 'locked';
+  const isLocked = batch?.status === 'locked';
+
+  if (!batch) return null;
 
   return (
     <div

@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
-import { User, signInWithGoogle, logOut } from '../../firebase';
+import { signInWithGoogle, logOut } from '../../firebase';
 
-interface ProfileModalProps {
-  onClose: () => void;
-  role: 'ngo' | 'provider';
-  onToggleRole: () => void;
-  currentUser: User | null;
-  onUserChange?: (user: User | null) => void;
-}
-
-export const ProfileModal: React.FC<ProfileModalProps> = ({
+export const ProfileModal = ({
   onClose,
   role,
   onToggleRole,
@@ -17,7 +9,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
   onUserChange
 }) => {
   const [loading, setLoading] = useState(false);
-  const [authError, setAuthError] = useState<string | null>(null);
+  const [authError, setAuthError] = useState(null);
 
   const handleSignIn = async () => {
     setLoading(true);
@@ -25,7 +17,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
     try {
       const user = await signInWithGoogle();
       if (onUserChange) onUserChange(user);
-    } catch (err: any) {
+    } catch (err) {
       console.error('[Google Sign-In Error]:', err);
       setAuthError(err.message || 'Google sign-in failed');
     } finally {
@@ -38,7 +30,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
     try {
       await logOut();
       if (onUserChange) onUserChange(null);
-    } catch (err: any) {
+    } catch (err) {
       console.error('[Google Sign-Out Error]:', err);
     } finally {
       setLoading(false);
@@ -55,7 +47,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="w-7 h-7 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center text-xs"
+            className="w-7 h-7 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center text-xs cursor-pointer"
           >
             ✕
           </button>
@@ -163,14 +155,14 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
           {currentUser && (
             <button
               onClick={handleSignOut}
-              className="flex-1 py-2.5 rounded-full border border-gray-200 hover:bg-gray-50 text-gray-600 font-bold text-xs"
+              className="flex-1 py-2.5 rounded-full border border-gray-200 hover:bg-gray-50 text-gray-600 font-bold text-xs cursor-pointer"
             >
               Sign Out
             </button>
           )}
           <button
             onClick={onClose}
-            className="flex-1 py-2.5 rounded-full bg-[#006b2c] text-white font-bold text-xs shadow active:scale-98"
+            className="flex-1 py-2.5 rounded-full bg-[#006b2c] text-white font-bold text-xs shadow active:scale-98 cursor-pointer"
           >
             Done
           </button>

@@ -1,15 +1,7 @@
 import React from 'react';
-import { NotificationItem } from '../../types';
 
-interface NotificationsDrawerProps {
-  notifications: NotificationItem[];
-  onClose: () => void;
-  onMarkAllAsRead: () => void;
-  onClear: () => void;
-}
-
-export const NotificationsDrawer: React.FC<NotificationsDrawerProps> = ({
-  notifications,
+export const NotificationsDrawer = ({
+  notifications = [],
   onClose,
   onMarkAllAsRead,
   onClear
@@ -27,7 +19,7 @@ export const NotificationsDrawer: React.FC<NotificationsDrawerProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center text-sm font-bold"
+            className="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center text-sm font-bold cursor-pointer"
           >
             ✕
           </button>
@@ -35,10 +27,10 @@ export const NotificationsDrawer: React.FC<NotificationsDrawerProps> = ({
 
         {/* Action bar */}
         <div className="px-4 py-2 bg-gray-50 border-b border-gray-200/50 flex items-center justify-between text-xs font-semibold text-gray-600">
-          <button onClick={onMarkAllAsRead} className="hover:text-[#006b2c]">
+          <button onClick={onMarkAllAsRead} className="hover:text-[#006b2c] cursor-pointer">
             Mark all read
           </button>
-          <button onClick={onClear} className="hover:text-red-600">
+          <button onClick={onClear} className="hover:text-red-600 cursor-pointer">
             Clear all
           </button>
         </div>
